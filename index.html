@@ -9,7 +9,11 @@
     <title>Click retargeting code generator</title>
 
     <link rel="stylesheet" type="text/css" href="stylesheet/style.css" />
-    <script type="text/javascript" src="javascript/jquery-1.7.2.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="stylesheet/jquery_ui.css" />
+    <script type="text/javascript" src="javascript/jquery_1.7.2.min.js"></script>
+    <script type="text/javascript" src="javascript/jquery_ui_1.8.13.min.js"></script>
+    <script type="text/javascript" src="javascript/adcloud_encoding.js"></script>
+    <script type="text/javascript" src="javascript/code_generator.js"></script>
 </head>
 <body>
     <div id='page'>
@@ -29,20 +33,29 @@
                             <input id='CodeGeneratorKeywords' class='keywords' type='text' name='keywords'/>
                         </div>
                         <div class="submit">
-                            <input type='submit' value='Generate'/>
+                            <input class='generate' type='submit' value='Generate'/>
                         </div>
                     </div>
                     <div id='right'>
                         <label for='CodeGeneratorCode'>Here is your generated code</label>
                         <textarea id='CodeGeneratorCode' class='code'></textarea>
                         <div class="submit">
-                            <input type='submit' value='Copy to clipboard'/>
+                            <input class='copy' type='submit' value='Copy to clipboard'/>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-        <div id='footer'>
+        <div id='footer' class='hidden'>
+            <div id="UrlErrorDialog">
+                <p>You have to enter an valid url.</p>
+            </div>
+            <div id="KeywordsErrorDialog">
+                <p>
+                    You have to enter at least one alpha numeric keyword.
+                    To enter more keywords, enter them comma separated.
+                </p>
+            </div>
         </div>
     </div>
 </body>

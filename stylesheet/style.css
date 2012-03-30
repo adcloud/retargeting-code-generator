@@ -87,3 +87,7 @@ body {
             width: 100%;
         }
 
+            div.hidden {
+                display: none;
+            }
+
