@@ -9,7 +9,7 @@ var generateButton = 'input[type=submit].generate'
   , urlInput = 'input[type=text].url'
   , textarea = 'textarea.code'
 
-  , retargetingUrl = 'http://a.adcloud.net/retaregting'
+  , retargetingUrl = 'http://a.adcloud.net/retargeting'
   , alNumRegex = /^([a-zA-Z0-9]+)$/;
 
 
