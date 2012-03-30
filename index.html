@@ -1,0 +1,49 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+
+    <title>Click retargeting code generator</title>
+
+    <link rel="stylesheet" type="text/css" href="stylesheet/style.css" />
+    <script type="text/javascript" src="javascript/jquery-1.7.2.min.js"></script>
+</head>
+<body>
+    <div id='page'>
+        <div id='header'>
+        </div>
+        <div id='content'>
+            <h2>Retargeting code generator</h2>
+            <div class='box'>
+                <div class='filter'>
+                    <div id='left'>
+                        <div class="input">
+                            <label for='CodeGeneratorUrl'>Enter your target url</label>
+                            <input id='CodeGeneratorUrl' class='url' type='text' name='url'/>
+                        </div>
+                        <div class="input">
+                            <label for='CodeGeneratorKeywords'>Enter your keywords comma separated</label>
+                            <input id='CodeGeneratorKeywords' class='keywords' type='text' name='keywords'/>
+                        </div>
+                        <div class="submit">
+                            <input type='submit' value='Generate'/>
+                        </div>
+                    </div>
+                    <div id='right'>
+                        <label for='CodeGeneratorCode'>Here is your generated code</label>
+                        <textarea id='CodeGeneratorCode' class='code'></textarea>
+                        <div class="submit">
+                            <input type='submit' value='Copy to clipboard'/>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id='footer'>
+        </div>
+    </div>
+</body>
+
