@@ -20,36 +20,60 @@
         <div id='header'>
         </div>
         <div id='content'>
-            <div class='box'>
-                <div class='filter'>
-                <h1>Retargeting code generator</h1>
+            <h2>Retargeting code generator</h2>
+
+            <div id="tabs" class="filter">
+                <ul>
+                    <li><a href="#PageViewRetargeting">PageViewRetargeting</a></li>
+                    <li><a href="#ClickRetargeting">ClickRetargeting</a></li>
+                </ul>
+                <div id="PageViewRetargeting">
                     <div id='left'>
                         <div class="input">
-                            <label for='CodeGeneratorUrl'>Enter your target url</label>
-                            <input id='CodeGeneratorUrl' class='url' type='text' name='url'/>
+                            <label>Choose a code type</label>
+                            <input name='CodeType' id='javascript' type='radio' checked='checked'/>
+                            <label for='javascript' class='radio'>Javascript</label>
+                            <input name='CodeType' id='pixel' type='radio'/>
+                            <label for='pixel' class='radio'>Pixel</label>
                         </div>
                         <div class="input">
-                            <label for='CodeGeneratorKeywords'>Enter your keywords comma separated</label>
-                            <input id='CodeGeneratorKeywords' class='keywords' type='text' name='keywords'/>
+                            <label for='PageViewKeywords'>Enter your keywords comma separated</label>
+                            <input id='PageViewKeywords' class='PageViewKeywords' type='text'/>
                         </div>
                         <div class="submit">
                             <input class='generate' type='submit' value='Generate'/>
                         </div>
                     </div>
                     <div id='right'>
-                        <label for='CodeGeneratorCode'>Here is your generated code</label>
-                        <textarea id='CodeGeneratorCode' class='code'></textarea>
+                        <label for='url'>Here is your retargeting url</label>
+                        <textarea id='url' class='code'></textarea>
+                    </div>
+                </div>
+                <div id="ClickRetargeting">
+                    <div id='left'>
+                        <div class="input">
+                            <label for='url'>Enter your target url</label>
+                            <input id='url' class='url' type='text' name='url'/>
+                        </div>
+                        <div class="input">
+                            <label for='ClickKeywords'>Enter your keywords comma separated</label>
+                            <input id='ClickKeywords' class='ClickKeywords' type='text'/>
+                        </div>
                         <div class="submit">
-                            <input class='copy' type='submit' value='Copy to clipboard'/>
+                            <input class='generate' type='submit' value='Generate'/>
                         </div>
                     </div>
-                </div>    
+                    <div id='right'>
+                        <label for='url'>Here is your retargeting url</label>
+                        <textarea id='url' class='code'></textarea>
+                    </div>
+                </div>
             </div>
-            <div class="filter">
+            <div class="box filter">
             <h2>Markierung der Webseiten Besucher</h2>
             <p>Es gibt drei Möglichkeiten Besucher für das Retargeting zu markieren. Mittels eines JavaScripts, eines Pixels, oder einer Klick-URL. Nutzen Sie bitte den oben befindlichen Generator, um einen Code-Schnipsel oder eine URL zusammenzubauen.</p>
             <p>Die Javascript-Einbindung führt wie die Pixeleinbindung beim Seitenaufruf zu einer Markierung des Besuchers mit den gewünschten Retargeting-Keywords. Die Javascript-Variante ist jedoch flexibler und dieser sollte, sofern das möglich ist, der Vorzug gegeben werden.</p>
-            <p>Die Klick-URL kann an einen beliebigen Link angefügt werden. Sie besteht aus einer frei wählbaren Ziel-URL und den entsprechenden Retargeting-Keywords. Klickt ein Besucher auf den Link wird er zuerst markiert und daraufhin an die  Ziel-URL weitergeleitet.</p> 
+            <p>Die Klick-URL kann an einen beliebigen Link angefügt werden. Sie besteht aus einer frei wählbaren Ziel-URL und den entsprechenden Retargeting-Keywords. Klickt ein Besucher auf den Link wird er zuerst markiert und daraufhin an die  Ziel-URL weitergeleitet.</p>
             <p>Wo Sie das JavaScript, den Pixel oder die Click-URL einbinden und welche Informationen sie speichern wollen, sprechen Sie bitte mit Ihrem Ansprechpartner bei Adcloud ab. Diesen können Sie auch konsultieren, wenn eine HTTPS-Variante gewünscht ist.</p>
             <h2>Keywords</h2>
             <p>Die Keywords können frei gewählt werden. Wird ein Benutzer mit einem Keyword markiert, können Kampagnen zu diesem Keyword ausgeliefert werden. Wird ein Benutzer mit mehreren Keywords markiert können verschiedene Kampagnen präsentiert werden.</p>
@@ -62,7 +86,7 @@
             <li>Vermeiden Sie Umlaute und Sonderzeichen.</li>
             <li>Keywords sollten ein Kunden spezifisches Präfix beinhalten z.B "apl-" für Apple</li>
             </ul>
-            
+
             <p><strong>Keywords und Einbauort 1:1 an Adcloud senden. Der Versand der Werbemittel erfolgt (unter Angabe der Kampagnen-ID/des Kampagnen-Namens) an: service@adcloud.com und Ihren Kundenbetreuer.</strong></p>
             </div>
         </div>

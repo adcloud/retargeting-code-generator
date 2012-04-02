@@ -1,4 +1,12 @@
 
+* {
+    font-size: 14px;
+}
+
+h2 {
+    font-size: 22px;
+}
+
 body {
     font-family: 'trebuchet ms',arial,sans-serif;
     line-height: 16px;
@@ -12,20 +20,20 @@ body {
 h1 {
     font-size: 20px;
     margin: 0 0 20px 0;
-    
+
 }
 h2 {
     font-size: 16px;
     margin-top: 20px;
-    
+
 }
 h3 {
     font-size: 12px;
-    
+
 }
 p {
     font-size: 12px;
-    
+
 }
 li {
     font-size: 12px;
@@ -36,6 +44,7 @@ div.filter h2:first-child {
 div.filter p:last-child {
     margin-bottom: 0;
 }
+
     div#page {
         width: 730px;
         margin: 50px auto;
@@ -60,9 +69,21 @@ div.filter p:last-child {
                 background: none repeat scroll 0 0 #F6F6F6;
                 border: 1px solid #A1A1A1;
                 margin: 20px 0;
-                padding: 15px 15px 15px 15px;
                 overflow: hidden;
+                padding-bottom: 15px;
             }
+
+            div.box.filter {
+                padding: 15px;
+            }
+
+                li.ui-state-default {
+                    background: #E6E6E6 !important;
+                }
+
+                li.ui-state-active {
+                    background: #F6F6F6 !important;
+                }
 
                 div#left {
                     float: left;
@@ -75,16 +96,20 @@ div.filter p:last-child {
                         border-left: 2px solid #d1d1d1;
                         padding-left: 15px;
                         padding-bottom: 0;
-                        min-height: 60px;
+                        min-height: 65px;
                     }
 
                         label {
                             font-weight: bold;
-                            min-width: 130px;
+                            min-width: 80px;
                             display: block;
                             background: none;
                             font-size: 12px;
                             padding: 3px 0 10px 0;
+                        }
+
+                        label.radio {
+                            float: left;
                         }
 
                         input[type=text], textarea {
@@ -101,6 +126,10 @@ div.filter p:last-child {
                             background: #ffffff;
                         }
 
+                        input[type="radio"] {
+                            float: left;
+                        }
+
                 div#right {
                     float: right;
                 }
@@ -108,7 +137,7 @@ div.filter p:last-child {
                     textarea.code {
                         float: right;
                         width: 350px;
-                        height: 108px;
+                        height: 113px;
                     }
 
         div#footer {
