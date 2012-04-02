@@ -9,6 +9,33 @@ body {
     font-size: 100.01%;
 }
 
+h1 {
+    font-size: 20px;
+    margin: 0 0 20px 0;
+    
+}
+h2 {
+    font-size: 16px;
+    margin-top: 20px;
+    
+}
+h3 {
+    font-size: 12px;
+    
+}
+p {
+    font-size: 12px;
+    
+}
+li {
+    font-size: 12px;
+}
+div.filter h2:first-child {
+    margin-top: 0;
+}
+div.filter p:last-child {
+    margin-bottom: 0;
+}
     div#page {
         width: 730px;
         margin: 50px auto;
@@ -18,6 +45,7 @@ body {
             background: url(../image/sprite_start.png) no-repeat 0 0;
             width: 100%;
             height: 55px;
+            margin-bottom: 30px;
         }
 
         div#content {
