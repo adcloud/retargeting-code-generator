@@ -37,12 +37,13 @@ jeweiligen Performance.
 
 Zur Fehlerminimierung und Performancesteigerung empfehlen wir folgende
 Tipps bei der Keyword Wahl:
-    * Die Anzahl der Keywords sollte möglichst gering sein.
-    * Die Länge der Keywords sollte möglichst kurz sein.
-    * Schreiben Sie alle Keywords klein.
-    * Vermeiden Sie Umlaute und Sonderzeichen.
-    * Keywords sollten ein Kunden spezifisches Präfix beinhalten z.B
-      "apl-" für Apple
+
+*    Die Anzahl der Keywords sollte möglichst gering sein.
+*    Die Länge der Keywords sollte möglichst kurz sein.
+*    Schreiben Sie alle Keywords klein.
+*    Vermeiden Sie Umlaute und Sonderzeichen.
+*    Keywords sollten ein Kunden spezifisches Präfix beinhalten z.B
+     "apl-" für Apple
 
 **Keywords und Einbauort 1:1 an Adcloud senden. Der Versand der
 Werbemittel erfolgt (unter Angabe der Kampagnen-ID/des Kampagnen-Namens)
