@@ -14,8 +14,8 @@ var generateButton = 'input[type=submit].generate'
   , tabs = tabList + ' li a'
 
   , retargetingUrl = 'http://a.adcloud.net/retargeting'
-  , alNumRegex = /^([a-zA-Z0-9]+)$/;
-
+  , alNumRegex = /^([a-zA-Z0-9]+)$/
+  , urlRegex = /^https?:\/\/.+/;
 
 
 /*
@@ -60,10 +60,9 @@ CodeGenerator.getUrl = function() {
       , urlInputField = $(urlInput)
       , userInput = urlInputField.val();
 
-    // TODO validate urls ???
-    // if (urlRegex.test(userInput)) {
+    if (urlRegex.test(userInput)) {
         url = userInput;
-    // }
+    }
 
     return url;
 };
@@ -72,6 +71,7 @@ CodeGenerator.getUrl = function() {
  * Notify user about missing or invalid keywords.
  */
 CodeGenerator.notifyKeywordError = function() {
+    this.resetCode();
     $("#KeywordsErrorDialog").dialog({
         title: 'Invalid keywords error',
         width: 300,
@@ -84,6 +84,7 @@ CodeGenerator.notifyKeywordError = function() {
  * Notify user about missing url.
  */
 CodeGenerator.notifyUrlError = function() {
+    this.resetCode();
     $("#UrlErrorDialog").dialog({
         title: 'Invalid url error',
         width: 300,
@@ -111,6 +112,13 @@ CodeGenerator.encodeUrl = function(url) {
 CodeGenerator.showCode = function(code) {
     $(textarea).val(code);
 };
+
+/*
+ * Reset textara content.
+ */
+CodeGenerator.resetCode = function() {
+    $(textarea).val('');
+}
 
 /*
  * Create complete retargeting url.
