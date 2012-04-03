@@ -1,11 +1,10 @@
 /*
  *
- *
+ * Retargeting code generator
  *
  */
 
 var generateButton = 'input[type=submit].generate'
-  , copyButton = 'input[type=submit].mark'
   , radioButtons = 'input[type=radio]'
   , pageViewKeywordsInput = 'input[type=text].PageViewKeywords'
   , clickKeywordsInput = 'input[type=text].ClickKeywords'
@@ -25,7 +24,11 @@ var generateButton = 'input[type=submit].generate'
 function CodeGenerator() {}
 
 /*
+ * Get keywords given by user.
  *
+ * @param string selector
+ *
+ * @return array
  */
 CodeGenerator.getKeywords = function(selector) {
     var keywords = []
@@ -48,7 +51,9 @@ CodeGenerator.getKeywords = function(selector) {
 };
 
 /*
+ * Get url given by user.
  *
+ * @return string
  */
 CodeGenerator.getUrl = function() {
     var url = ''
@@ -64,7 +69,7 @@ CodeGenerator.getUrl = function() {
 };
 
 /*
- *
+ * Notify user about missing or invalid keywords.
  */
 CodeGenerator.notifyKeywordError = function() {
     $("#KeywordsErrorDialog").dialog({
@@ -76,7 +81,7 @@ CodeGenerator.notifyKeywordError = function() {
 };
 
 /*
- *
+ * Notify user about missing url.
  */
 CodeGenerator.notifyUrlError = function() {
     $("#UrlErrorDialog").dialog({
@@ -88,21 +93,32 @@ CodeGenerator.notifyUrlError = function() {
 };
 
 /*
+ * Encode an url in adcloud style base64.
  *
+ * @param string url
+ *
+ * @return string
  */
 CodeGenerator.encodeUrl = function(url) {
-    return escape(Encoding.base64(url));
+    return Encoding.base64(url);
 };
 
 /*
+ * Display code in textarea.
  *
+ * @param string code
  */
-CodeGenerator.showCode = function(url) {
-    $(textarea).val(url);
+CodeGenerator.showCode = function(code) {
+    $(textarea).val(code);
 };
 
 /*
+ * Create complete retargeting url.
  *
+ * @param array keywords
+ * @param string url
+ *
+ * @return string
  */
 CodeGenerator.generateUrl = function(keywords, url) {
     var urlParts = [
@@ -120,7 +136,7 @@ CodeGenerator.generateUrl = function(keywords, url) {
 };
 
 /*
- *
+ * Dispatch code generation for click retargeting.
  */
 CodeGenerator.generateForClickRetargeting = function() {
     var keywords = this.getKeywords(clickKeywordsInput)
@@ -139,7 +155,11 @@ CodeGenerator.generateForClickRetargeting = function() {
 };
 
 /*
+ * Get the retargeting pixel.
  *
+ * @param array keywords
+ *
+ * @return string
  */
 CodeGenerator.generatePixel = function(keywords) {
     var pixel = [
@@ -148,11 +168,15 @@ CodeGenerator.generatePixel = function(keywords) {
         '" width="1" height="1" border="0" alt=""/>'
     ].join('');
 
-    this.showCode(pixel);
+    return pixel;
 };
 
 /*
+ * Create the retargeting javascript.
  *
+ * @param array keywords
+ *
+ * @return string
  */
 CodeGenerator.generateJavascript = function(keywords) {
     var javascript = [
@@ -165,28 +189,31 @@ CodeGenerator.generateJavascript = function(keywords) {
         '<script src="http://ads.adcloud.net/api.js" type="text/javascript"></script>'
     ].join('\n');
 
-    this.showCode(javascript);
+    return javascript;
 };
 
 /*
- *
+ * Dispatch code generation for page view retargeting.
  */
 CodeGenerator.generateForPageViewRetargeting = function() {
-    var keywords = this.getKeywords(pageViewKeywordsInput);
+    var code
+      , keywords = this.getKeywords(pageViewKeywordsInput);
 
     if (keywords.length === 0) {
         return this.notifyKeywordError();
     }
 
     if (this.codeType === 'javascript') {
-        this.generateJavascript(keywords);
+        code = this.generateJavascript(keywords);
     } else {
-        this.generatePixel(keywords);
+        code = this.generatePixel(keywords);
     }
+
+    this.showCode(code);
 };
 
 /*
- *
+ * Initialize all click events.
  */
 CodeGenerator.initClickEvents = function() {
     var self = this;
@@ -201,10 +228,6 @@ CodeGenerator.initClickEvents = function() {
         $(textarea).select();
     });
 
-    $(copyButton).click(function() {
-        $(textarea).select();
-    });
-
     $(tabs).click(function() {
         self.activeRetargetingType = $(this).text();
     });
@@ -215,7 +238,7 @@ CodeGenerator.initClickEvents = function() {
 };
 
 /*
- *
+ * Initialize the module.
  */
 CodeGenerator.init = function() {
     this.codeType = 'javascript';
@@ -228,7 +251,7 @@ CodeGenerator.init = function() {
 };
 
 /*
- *
+ * Start module initialization if dom is ready.
  */
 $(document).ready(function() {
     CodeGenerator.init();
