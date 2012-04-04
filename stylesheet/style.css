@@ -124,6 +124,7 @@ div.filter p:last-child {
                             border-radius: 4px;
                             padding: 3px;
                             background: #ffffff;
+                            min-width: 250px;
                         }
 
                         input[type="radio"] {
