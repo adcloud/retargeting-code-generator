@@ -30,15 +30,12 @@
                 <div id="PageViewRetargeting">
                     <div id='left'>
                         <div class="input">
-                            <label>Choose a code type</label>
-                            <input name='CodeType' id='javascript' type='radio' checked='checked'/>
-                            <label for='javascript' class='radio'>Javascript</label>
-                            <input name='CodeType' id='pixel' type='radio'/>
-                            <label for='pixel' class='radio'>Pixel</label>
+                            <label for='CompanyId'>Enter an company id</label>
+                            <input id='CompanyId' class='CompanyId' type='text'/>
                         </div>
                         <div class="input">
-                            <label for='PageViewKeywords'>Enter your keywords comma separated</label>
-                            <input id='PageViewKeywords' class='PageViewKeywords' type='text'/>
+                            <label for='keywords'>Enter your keywords comma separated</label>
+                            <input id='keywords' class='keywords' type='text'/>
                         </div>
                         <div class="submit">
                             <input class='generate' type='submit' value='Generate'/>
@@ -52,12 +49,16 @@
                 <div id="ClickRetargeting">
                     <div id='left'>
                         <div class="input">
+                            <label for='CompanyId'>Enter an company id</label>
+                            <input id='CompanyId' class='CompanyId' type='text'/>
+                        </div>
+                        <div class="input">
                             <label for='url'>Enter your target url</label>
                             <input id='url' class='url' type='text' name='url'/>
                         </div>
                         <div class="input">
-                            <label for='ClickKeywords'>Enter your keywords comma separated</label>
-                            <input id='ClickKeywords' class='ClickKeywords' type='text'/>
+                            <label for='keywords'>Enter your keywords comma separated</label>
+                            <input id='keywords' class='keywords' type='text'/>
                         </div>
                         <div class="submit">
                             <input class='generate' type='submit' value='Generate'/>
@@ -93,6 +94,9 @@
         <div id='footer' class='hidden'>
             <div id="UrlErrorDialog">
                 <p>You have to enter an valid url starting with http:// or https://.</p>
+            </div>
+            <div id="CompanyIdErrorDialog">
+                <p>You have to enter an valid company id containing only numbers.</p>
             </div>
             <div id="KeywordsErrorDialog">
                 <p>
