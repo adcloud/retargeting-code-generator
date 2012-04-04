@@ -4,17 +4,23 @@
  *
  */
 
-var generateButton = 'input[type=submit].generate'
-  , radioButtons = 'input[type=radio]'
-  , pageViewKeywordsInput = 'input[type=text].PageViewKeywords'
-  , clickKeywordsInput = 'input[type=text].ClickKeywords'
-  , urlInput = 'input[type=text].url'
+var pageViewBox = 'div#PageViewRetargeting'
+  , clickBox = 'div#ClickRetargeting'
+  , generateButton = 'input[type=submit].generate'
+
+  , pageViewKeywordsInput = pageViewBox + ' input[type=text].keywords'
+  , pageViewCompanyIdInput = pageViewBox + ' input[type=text].CompanyId'
+
+  , clickKeywordsInput = clickBox + ' input[type=text].keywords'
+  , urlInput = clickBox + ' input[type=text].url'
+
   , textarea = 'textarea.code'
   , tabList = 'div#tabs'
   , tabs = tabList + ' li a'
 
   , retargetingUrl = 'http://a.adcloud.net/retargeting'
   , alNumRegex = /^([a-zA-Z0-9]+)$/
+  , numRegex = /^([0-9]+)$/
   , urlRegex = /^https?:\/\/.+/;
 
 
@@ -51,6 +57,25 @@ CodeGenerator.getKeywords = function(selector) {
 };
 
 /*
+ * Get company id given by user.
+ *
+ * @param string selector
+ *
+ * @return number
+ */
+CodeGenerator.getCompanyId = function(selector) {
+    var companyId = 0
+      , companyIdInputField = $(selector)
+      , userCompanyId = companyIdInputField.val();
+
+    if (numRegex.test(userCompanyId)) {
+        companyId = userCompanyId;
+    }
+
+    return companyId;
+};
+
+/*
  * Get url given by user.
  *
  * @return string
@@ -68,12 +93,15 @@ CodeGenerator.getUrl = function() {
 };
 
 /*
- * Notify user about missing or invalid keywords.
+ * Show users a error dialog.
+ *
+ * @param object options
  */
-CodeGenerator.notifyKeywordError = function() {
+CodeGenerator.showErrorDialog = function(options) {
     this.resetCode();
-    $("#KeywordsErrorDialog").dialog({
-        title: 'Invalid keywords error',
+
+    $(options.dialogId).dialog({
+        title: options.title,
         width: 300,
         height: 150,
         modal: true
@@ -81,15 +109,32 @@ CodeGenerator.notifyKeywordError = function() {
 };
 
 /*
+ * Notify user about missing or invalid company id.
+ */
+CodeGenerator.notifyCompanyIdError = function() {
+    this.showErrorDialog({
+        dialogId: '#CompanyIdErrorDialog',
+        title: 'Invalid company id error'
+    });
+};
+
+/*
+ * Notify user about missing or invalid keywords.
+ */
+CodeGenerator.notifyKeywordError = function() {
+    this.showErrorDialog({
+        dialogId: '#KeywordsErrorDialog',
+        title: 'Invalid keyword error'
+    });
+};
+
+/*
  * Notify user about missing url.
  */
 CodeGenerator.notifyUrlError = function() {
-    this.resetCode();
-    $("#UrlErrorDialog").dialog({
+    this.showErrorDialog({
+        dialogId: '#UrlErrorDialog',
         title: 'Invalid url error',
-        width: 300,
-        height: 150,
-        modal: true
     });
 };
 
@@ -123,22 +168,22 @@ CodeGenerator.resetCode = function() {
 /*
  * Create complete retargeting url.
  *
- * @param array keywords
+ * @param number companyId
  * @param string url
+ * @param array keywords
  *
  * @return string
  */
-CodeGenerator.generateUrl = function(keywords, url) {
+CodeGenerator.generateUrl = function(companyId, url, keywords) {
     var urlParts = [
         retargetingUrl,
         '?keywords=',
-        encodeURIComponent(keywords.join(','))
+        encodeURIComponent(keywords.join(',')),
+        '&companyId=',
+        companyId,
+        '&redirect=',
+        this.encodeUrl(url)
     ];
-
-    if (typeof url === 'string') {
-        urlParts.push('&redirect=');
-        urlParts.push(this.encodeUrl(url));
-    }
 
     return urlParts.join('');
 };
@@ -146,52 +191,41 @@ CodeGenerator.generateUrl = function(keywords, url) {
 /*
  * Dispatch code generation for click retargeting.
  */
-CodeGenerator.generateForClickRetargeting = function() {
-    var keywords = this.getKeywords(clickKeywordsInput)
-      , url = this.getUrl();
-
-    if (keywords.length === 0) {
-        return this.notifyKeywordError();
+CodeGenerator.generateClickRetargeting = function() {
+    var companyId = this.getCompanyId(pageViewCompanyIdInput);
+    if (companyId === 0) {
+        return this.notifyCompanyIdError();
     }
 
+    var url = this.getUrl();
     if (url.length === 0) {
         return this.notifyUrlError();
     }
 
-    var generatedUrl = this.generateUrl(keywords, url);
+    var keywords = this.getKeywords(clickKeywordsInput);
+    if (keywords.length === 0) {
+        return this.notifyKeywordError();
+    }
+
+    var generatedUrl = this.generateUrl(companyId, url, keywords);
     this.showCode(generatedUrl);
-};
-
-/*
- * Get the retargeting pixel.
- *
- * @param array keywords
- *
- * @return string
- */
-CodeGenerator.generatePixel = function(keywords) {
-    var pixel = [
-        '<img src="',
-        this.generateUrl(keywords),
-        '" width="1" height="1" border="0" alt=""/>'
-    ].join('');
-
-    return pixel;
 };
 
 /*
  * Create the retargeting javascript.
  *
  * @param array keywords
+ * @param number companyId
  *
  * @return string
  */
-CodeGenerator.generateJavascript = function(keywords) {
+CodeGenerator.generateJavascript = function(keywords, companyId) {
     var javascript = [
         '<script>',
         '    var adcloud_config = {',
+        '        type: "retargeting",',
+        '        companyId: ' + companyId + ',',
         '        keywords: ' + JSON.stringify(keywords) + ',',
-        '        type: "retargeting"',
         '    };',
         '</script>',
         '<script src="http://ads.adcloud.net/api.js" type="text/javascript"></script>'
@@ -203,20 +237,19 @@ CodeGenerator.generateJavascript = function(keywords) {
 /*
  * Dispatch code generation for page view retargeting.
  */
-CodeGenerator.generateForPageViewRetargeting = function() {
-    var code
-      , keywords = this.getKeywords(pageViewKeywordsInput);
+CodeGenerator.generatePageViewRetargeting = function() {
+    var keywords = this.getKeywords(pageViewKeywordsInput)
+      , companyId = this.getCompanyId(pageViewCompanyIdInput);
+
+    if (companyId === 0) {
+        return this.notifyCompanyIdError();
+    }
 
     if (keywords.length === 0) {
         return this.notifyKeywordError();
     }
 
-    if (this.codeType === 'javascript') {
-        code = this.generateJavascript(keywords);
-    } else {
-        code = this.generatePixel(keywords);
-    }
-
+    var code = this.generateJavascript(keywords, companyId);
     this.showCode(code);
 };
 
@@ -228,9 +261,9 @@ CodeGenerator.initClickEvents = function() {
 
     $(generateButton).click(function() {
         if (self.activeRetargetingType === 'ClickRetargeting') {
-            self.generateForClickRetargeting();
+            self.generateClickRetargeting();
         } else {
-            self.generateForPageViewRetargeting();
+            self.generatePageViewRetargeting();
         }
 
         $(textarea).select();
@@ -238,10 +271,7 @@ CodeGenerator.initClickEvents = function() {
 
     $(tabs).click(function() {
         self.activeRetargetingType = $(this).text();
-    });
-
-    $(radioButtons).click(function() {
-        self.codeType = $(this).attr('id');
+        self.resetCode();
     });
 };
 
@@ -249,7 +279,6 @@ CodeGenerator.initClickEvents = function() {
  * Initialize the module.
  */
 CodeGenerator.init = function() {
-    this.codeType = 'javascript';
     this.activeRetargetingType = 'PageViewRetargeting';
     this.initClickEvents();
 
