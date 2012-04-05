@@ -12,6 +12,7 @@ var pageViewBox = 'div#PageViewRetargeting'
   , pageViewCompanyIdInput = pageViewBox + ' input[type=text].CompanyId'
 
   , clickKeywordsInput = clickBox + ' input[type=text].keywords'
+  , clickCompanyIdInput = clickBox + ' input[type=text].CompanyId'
   , urlInput = clickBox + ' input[type=text].url'
 
   , textarea = 'textarea.code'
@@ -192,7 +193,7 @@ CodeGenerator.generateUrl = function(companyId, url, keywords) {
  * Dispatch code generation for click retargeting.
  */
 CodeGenerator.generateClickRetargeting = function() {
-    var companyId = this.getCompanyId(pageViewCompanyIdInput);
+    var companyId = this.getCompanyId(clickCompanyIdInput);
     if (companyId === 0) {
         return this.notifyCompanyIdError();
     }
@@ -270,7 +271,7 @@ CodeGenerator.initClickEvents = function() {
     });
 
     $(tabs).click(function() {
-        self.activeRetargetingType = $(this).text();
+        self.activeRetargetingType = $(this).attr('class');
         self.resetCode();
     });
 };
